@@ -36,7 +36,7 @@
                             <p>작성자 : <span th:text="${data.author}"></span></p>
                         </div>
                         <div class="mb-3 mt-3">
-                            <p>작성일 : <span th:text="${data.modDate}"></span></p>
+                            <p>작성일 : <span th:text="${#temporals.format(data.modDate , 'yyyy-MM-dd')}"></span></p>
                         </div>
                     </div>
                     <div class="card-footer"> <!-- Controller → modify, delete → 인수가 id -->

@@ -25,14 +25,14 @@
             <form th:action="@{/list}" method="get"> <!-- GetMapping & PostMapping 이름을 참고해서 -->
                 <div class="input-group mb-3">
                     <select class="form-select" name="type">
-                        <option value=""></option>
-                        <option value="S">제목</option>
-                        <option value="C">내용</option>
-                        <option value="A">작성자</option>
-                        <option value="SC">제목+내용</option>
-                        <option value="SCA">제목+내용+작성자</option>
+                        <option value="" th:selected="${type==null}">전체</option>
+                        <option value="S" th:selected="${type=='S'}">제목</option>
+                        <option value="C" th:selected="${type=='C'}">내용</option>
+                        <option value="A" th:selected="${type=='A'}">작성자</option>
+                        <option value="SC" th:selected="${type=='SC'}">제목+내용</option>
+                        <option value="SCA" th:selected="${type=='SCA'}">제목+내용+작성자</option>
                     </select>
-                    <input type="text" class="form-control" name="keyword" placeholder="Something clever..">
+                    <input type="text" class="form-control" name="keyword" th:value="${keyword}" placeholder="Something clever..">
                     <button class="btn btn-primary" type="submit">검색</button>
                     <button class="btn btn-danger" type="reset">초기화</button>
                 </div>
@@ -59,7 +59,7 @@
                     <td th:text="${data.id}">99999</td>
                     <td th:text="${data.subject}">이것은 테스트 게시글</td>
                     <td th:text="${data.author}">홍길동</td>
-                    <td th:text="${data.modDate}">2025-03-26</td>
+                    <td th:text="${#temporals.format(data.modDate , 'yyyy-MM-dd')}">2025-03-26</td>
                     <td>
                       <a th:href="@{/detail(id=${data.id})}" type="button" class="btn btn-secondary"><i class="bi-clipboard-check-fill"></i></a>
                     </td>
@@ -68,11 +68,19 @@
             </table>
             <!-- 페이지번호 -->
             <ul class="pagination pagination-sm">
-                <li class="page-item"><a class="page-link" href="#">처음</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">마지막</a></li>
+                <li class="page-item" th:unless="${startPage==1}">
+                    <a class="page-link" th:href="@{/list(page=1 , type=${type} , keyword=${keyword})}">처음</a>
+                </li>
+
+                <span th:each="page : ${#numbers.sequence(startPage, endPage, 1)}">
+                  <li class="page-item" th:class="${page==currentPage} ? 'active' : '' "> <!-- 현재페이지 활성화 -->
+                    <a class="page-link" th:href="@{/list(page=${page} , type=${type} , keyword=${keyword})}" th:text="${page}">1</a>
+                </li>
+                </span>
+
+                <li class="page-item" th:unless="${lastPage<=currentPage}">
+                    <a class="page-link" th:href="@{/list(page=${lastPage} , type=${type} , keyword=${keyword})}">마지막</a>
+                </li>
             </ul>
         </div> <!-- 작업 영역 -->
         <div class="col-1"></div> <!-- 오른쪽 여백 -->
