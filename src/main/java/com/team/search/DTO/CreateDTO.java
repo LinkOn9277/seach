@@ -10,6 +10,7 @@ public class CreateDTO {
 
     private Integer id;             // 일련번호
     private String subject;         // 제목
+    private String content;
     private String author;          // 작성자
     private LocalDateTime modDate;  // 수정일자
 

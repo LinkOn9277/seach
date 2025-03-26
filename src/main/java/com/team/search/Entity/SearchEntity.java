@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 // Lombok 이용해서 메소드 자동화
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor @AllArgsConstructor
 
 @Entity
+@EntityListeners(AuditingEntityListener.class) // createDate, LastModifyDate 불가능
 @SequenceGenerator( // 자동숫자를 생성하고 , 정보를 저장
         name = "search_seq" ,           // 테이블+seq
         sequenceName = "search_seq" ,   // 필드명

@@ -27,11 +27,10 @@
                             <p>번호 : <span th:text="${data.id}"></span></p>
                         </div>
                         <div class="mb-3 mt-3"> <!-- 위여백3 , 아래여백3 -->
-                            <p>제목 : <span th:text="subject"></span></p>
+                            <p>제목 : <span th:text="${data.subject}"></span></p>
                         </div>
                         <div class="mb-3 mt-3"> <!-- 위여백3(6) -->
-                            <p>내용 :</p>
-                            <p th:text="${data.content}">내용 :</p>
+                            <p>내용 : <span th:text="${data.content}"></span></p>
                         </div>
                         <div class="mb-3 mt-3">
                             <p>작성자 : <span th:text="${data.author}"></span></p>
